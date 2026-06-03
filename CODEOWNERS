@@ -1,0 +1,5 @@
+# CODEOWNERS — De-ASI-INTERFACE
+# All files in this repository require review and approval from the maintainer.
+# No PR can be merged without explicit approval from @De-ASI-INTERFACE.
+
+* @De-ASI-INTERFACE

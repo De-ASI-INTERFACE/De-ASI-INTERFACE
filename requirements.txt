@@ -1,0 +1,25 @@
+# De-ASI-INTERFACE Ecosystem — Shared Dev Dependencies
+# Creator: Richard Patterson (@De-ASI-INTERFACE)
+
+# Solana
+solana>=0.30.0
+solders>=0.18.0
+
+# HTTP
+aiohttp>=3.9.0
+requests>=2.31.0
+
+# API
+fastapi>=0.111.0
+uvicorn[standard]>=0.30.0
+pydantic>=2.7.0
+
+# Utilities
+python-dotenv>=1.0.0
+loguru>=0.7.0
+base58>=2.1.1
+
+# Dev/Lint
+ruff>=0.4.0
+mypy>=1.10.0
+pytest>=8.2.0

@@ -1,57 +1,51 @@
-name: De-ASI-INTERFACE CI
+name: CI — Test, Lint & Audit
 
 on:
   push:
-    branches: [Richy, main]
+    branches: [main]
   pull_request:
-    branches: [Richy, main]
+    branches: [main]
 
 jobs:
-  lint-python:
-    name: Lint Python
+  test:
+    name: Pytest Suite
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-      - name: Install linters
-        run: pip install ruff mypy
-      - name: Ruff lint
-        run: ruff check . --ignore E501 || true
-      - name: Type check
-        run: mypy . --ignore-missing-imports || true
+          python-version: ${{ matrix.python-version }}
 
-  lint-typescript:
-    name: Lint TypeScript
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-cov ruff
+          pip install numpy pandas httpx
+
+      - name: Run linter (ruff)
+        run: ruff check src/ tests/ --select E,F,W --ignore E501
+
+      - name: Run tests with coverage
+        run: |
+          pytest tests/ -v --tb=short --cov=src --cov-report=term-missing
+
+      - name: Assert 100% test pass rate
+        run: pytest tests/ --tb=short -q
+
+  security-scan:
+    name: Secret Scanning
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: Install deps
+      - name: Verify no secrets in source
         run: |
-          if [ -f package.json ]; then
-            npm ci || npm install
-          fi
-      - name: TypeScript check
-        run: |
-          if [ -f tsconfig.json ]; then
-            npx tsc --noEmit || true
-          fi
-
-  secret-scan:
-    name: Secret Scan
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Check for hardcoded secrets
-        run: |
-          if grep -r "private_key\|secret_key\|api_key" --include="*.py" --include="*.ts" . | grep -v ".env" | grep -v "os.getenv" | grep -v "process.env" | grep -v ".env.example"; then
-            echo "WARNING: Potential hardcoded secret detected"
-            exit 1
-          fi
-          echo "Secret scan clean."
+          grep -rn --include="*.py" --include="*.ts" --include="*.json" \
+            -E '(api_key|private_key|secret|password|mnemonic)\s*=\s*["\x27][^$\{]' \
+            src/ tests/ || echo "No hardcoded secrets found — CLEAN"

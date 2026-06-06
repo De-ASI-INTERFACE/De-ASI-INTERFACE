@@ -2,66 +2,32 @@
 
 ## Supported Versions
 
-Only the latest version on the `Richy` branch is actively maintained and eligible for security fixes.
-
-| Branch | Supported |
-|--------|----------|
-| `Richy` (latest) | ✅ Yes |
-| All others | ❌ No |
-
----
+All active repositories under [@De-ASI-INTERFACE](https://github.com/De-ASI-INTERFACE) are covered by this security policy.
 
 ## Reporting a Vulnerability
 
-**Do not open a public GitHub issue for security vulnerabilities.**
+If you discover a security vulnerability in any repository under this organization, please do **not** open a public GitHub issue.
 
-Public disclosure before a coordinated fix puts users at risk and will not be acknowledged or rewarded.
-
-### How to Report
-
-Report security vulnerabilities privately via:
-- **GitHub Private Security Advisory** (preferred): [Security Advisories](https://github.com/De-ASI-INTERFACE/De-ASI-INTERFACE/security/advisories/new)
-- **Direct message on X/Twitter**: [@De-ASI-INTERFACE](https://x.com)
-
-Include in your report:
-- A clear description of the vulnerability
-- Steps to reproduce
-- Potential impact
-- Any suggested mitigations if known
-
----
-
-## Coordinated Disclosure Policy
-
-- You will receive an acknowledgment within **72 hours**
-- We will investigate and communicate a timeline for a fix
-- **No public disclosure** until a patch is released and deployed
-- We reserve the right to determine the severity and fix timeline
-- Responsible disclosures will be credited in the release notes (if desired)
-
----
+Instead, report it privately via:
+- **GitHub:** Use the private security advisory feature on the affected repository
+- **Response Time:** We aim to acknowledge reports within 48 hours and provide a resolution timeline within 7 business days.
 
 ## Scope
 
-In scope:
-- This repository and its code
-- Dependencies introduced by this project
-- Deployed infrastructure directly managed by this project
+This policy covers:
+- Solana smart contract vulnerabilities
+- SPL token logic flaws
+- Trading bot credential exposure
+- API key or private key exposure in code
+- DeFi protocol logic exploits
+- AMM/liquidity pool manipulation vectors
 
-Out of scope:
-- Third-party services, APIs, or platforms this project integrates with
-- Issues in upstream dependencies (report those to the upstream maintainer)
-- Social engineering or phishing attacks
+## Out of Scope
 
----
+- Issues in forked third-party dependencies
+- Social engineering attacks
+- Physical infrastructure
 
-## Security Practices in This Codebase
+## Responsible Disclosure
 
-- All secrets are loaded from environment variables — never hardcoded
-- All commits are GPG-signed
-- Dependencies are pinned to verified versions
-- No unvetted GitHub Actions or third-party apps are authorized
-
----
-
-*De-ASI-INTERFACE Security Policy — maintained by Richard Patterson*
+We follow a responsible disclosure model. Security researchers who report valid vulnerabilities in good faith will be acknowledged in release notes.

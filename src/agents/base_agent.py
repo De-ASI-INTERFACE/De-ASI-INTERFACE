@@ -1,7 +1,6 @@
 """Base AI Agent Execution Adapter.
-
-Provides the abstract interface all De-ASI agents must implement.
-Designed for Solana-native agentic finance workflows.
+Owner/Creator: Richard Patterson
+© 2026 Richard Patterson. All Rights Reserved.
 """
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
@@ -17,23 +16,19 @@ class BaseAgent(ABC):
         self.agent_id = agent_id
         self.config = config or {}
         self._running = False
-        logger.info(f"Agent {self.agent_id} initialized.")
+        logger.info("Agent %s initialized.", self.agent_id)
 
     @abstractmethod
-    def execute(self, payload: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute agent logic with a given payload. Must return result dict."""
+    def execute(self, payload: Dict[str, Any]) -> Dict[str, Any]: ...
 
     @abstractmethod
-    def health_check(self) -> bool:
-        """Return True if agent is healthy and ready to execute."""
+    def health_check(self) -> bool: ...
 
     def start(self):
         self._running = True
-        logger.info(f"Agent {self.agent_id} started.")
 
     def stop(self):
         self._running = False
-        logger.info(f"Agent {self.agent_id} stopped.")
 
     @property
     def is_running(self) -> bool:

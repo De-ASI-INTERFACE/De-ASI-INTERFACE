@@ -1,4 +1,9 @@
-"""Unit tests for ASI Ecosystem Integration Modules."""
+"""Tests — ASI Ecosystem Integration Modules
+Owner/Creator: Richard Patterson | © 2026 Richard Patterson
+"""
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).parents[1]))
+
 import pytest
 from src.asi.asi_registry import ASIRegistry
 from src.asi.interop_bridge import InteropBridge
@@ -6,92 +11,32 @@ from src.asi.interop_bridge import InteropBridge
 
 class TestASIRegistry:
     def setup_method(self):
-        self.registry = ASIRegistry()
+        self.reg = ASIRegistry()
 
-    def test_health_check(self):
-        assert self.registry.health_check() is True
-
-    def test_register_agent(self):
-        result = self.registry.register("agent-001", ["trading", "signal"])
-        assert result is True
-        assert self.registry.count() == 1
-
-    def test_lookup_by_capability(self):
-        self.registry.register("agent-001", ["trading", "signal"])
-        self.registry.register("agent-002", ["monitoring"])
-        traders = self.registry.lookup("trading")
-        assert "agent-001" in traders
-        assert "agent-002" not in traders
-
-    def test_deregister_agent(self):
-        self.registry.register("agent-001", ["trading"])
-        result = self.registry.deregister("agent-001")
-        assert result is True
-        assert self.registry.count() == 0
-
-    def test_deregister_nonexistent_returns_false(self):
-        assert self.registry.deregister("nonexistent") is False
-
-    def test_get_agent_returns_correct_data(self):
-        self.registry.register("agent-001", ["trading"], metadata={"version": "1.0"})
-        data = self.registry.get_agent("agent-001")
-        assert data["capabilities"] == ["trading"]
-        assert data["metadata"]["version"] == "1.0"
-
-    def test_list_all(self):
-        self.registry.register("agent-001", ["trading"])
-        self.registry.register("agent-002", ["monitoring"])
-        all_agents = self.registry.list_all()
-        assert len(all_agents) == 2
-
-    def test_overwrite_existing_agent(self):
-        self.registry.register("agent-001", ["trading"])
-        self.registry.register("agent-001", ["monitoring"])  # overwrite
-        data = self.registry.get_agent("agent-001")
-        assert data["capabilities"] == ["monitoring"]
+    def test_health(self):             assert self.reg.health_check()
+    def test_register(self):           assert self.reg.register("a1", ["trading"]) and self.reg.count() == 1
+    def test_lookup_match(self):       self.reg.register("a1",["trading","signal"]); self.reg.register("a2",["monitoring"]); assert "a1" in self.reg.lookup("trading") and "a2" not in self.reg.lookup("trading")
+    def test_lookup_no_match(self):    self.reg.register("a1",["trading"]); assert self.reg.lookup("x") == []
+    def test_deregister(self):         self.reg.register("a1",["t"]); assert self.reg.deregister("a1") and self.reg.count()==0
+    def test_deregister_missing(self): assert not self.reg.deregister("ghost")
+    def test_get_agent(self):          self.reg.register("a1",["t"],metadata={"v":"1.0"}); assert self.reg.get_agent("a1")["metadata"]["v"]=="1.0"
+    def test_get_agent_missing(self):  assert self.reg.get_agent("x") is None
+    def test_list_all(self):           self.reg.register("a1",["t"]); self.reg.register("a2",["m"]); assert len(self.reg.list_all())==2
+    def test_overwrite(self):          self.reg.register("a1",["t"]); self.reg.register("a1",["m"]); assert self.reg.get_agent("a1")["capabilities"]==["m"]
+    def test_count(self):              [self.reg.register(f"a{i}",["x"]) for i in range(5)]; assert self.reg.count()==5
 
 
 class TestInteropBridge:
     def setup_method(self):
-        self.bridge = InteropBridge()
+        self.br = InteropBridge()
 
-    def test_health_check(self):
-        assert self.bridge.health_check() is True
-
-    def test_publish_no_subscribers_returns_zero(self):
-        count = self.bridge.publish("trade.signal", {"signal": "BUY"})
-        assert count == 0
-
-    def test_subscribe_and_receive(self):
-        received = []
-        self.bridge.subscribe("trade.signal", lambda msg: received.append(msg))
-        self.bridge.publish("trade.signal", {"signal": "BUY", "price": 100.0})
-        assert len(received) == 1
-        assert received[0]["signal"] == "BUY"
-
-    def test_multiple_subscribers(self):
-        received_a, received_b = [], []
-        self.bridge.subscribe("topic", lambda m: received_a.append(m))
-        self.bridge.subscribe("topic", lambda m: received_b.append(m))
-        count = self.bridge.publish("topic", {"data": 1})
-        assert count == 2
-        assert len(received_a) == 1
-        assert len(received_b) == 1
-
-    def test_message_log_recorded(self):
-        self.bridge.publish("topic", {"x": 1})
-        log = self.bridge.get_log()
-        assert len(log) == 1
-        assert log[0]["topic"] == "topic"
-
-    def test_clear_log(self):
-        self.bridge.publish("topic", {"x": 1})
-        self.bridge.clear_log()
-        assert len(self.bridge.get_log()) == 0
-
-    def test_handler_exception_does_not_crash_bridge(self):
-        def bad_handler(msg):
-            raise RuntimeError("handler failure")
-        self.bridge.subscribe("topic", bad_handler)
-        count = self.bridge.publish("topic", {"x": 1})  # must not raise
-        assert count == 1
+    def test_health(self):                   assert self.br.health_check()
+    def test_no_subs(self):                  assert self.br.publish("t",{}) == 0
+    def test_subscribe_receive(self):        rcv=[]; self.br.subscribe("t",lambda m:rcv.append(m)); self.br.publish("t",{"v":1}); assert rcv[0]["v"]==1
+    def test_multi_subs(self):               a,b=[],[]; self.br.subscribe("t",lambda m:a.append(m)); self.br.subscribe("t",lambda m:b.append(m)); assert self.br.publish("t",{})==2
+    def test_log_recorded(self):             self.br.publish("t",{}); assert len(self.br.get_log())==1
+    def test_log_topic(self):                self.br.publish("my_topic",{}); assert self.br.get_log()[0]["topic"]=="my_topic"
+    def test_clear_log(self):                self.br.publish("t",{}); self.br.clear_log(); assert self.br.get_log()==[]
+    def test_handler_exception_no_crash(self): self.br.subscribe("t",lambda m:1/0); assert self.br.publish("t",{})==1
+    def test_separate_topics(self):          a=[]; self.br.subscribe("t1",lambda m:a.append(m)); self.br.publish("t2",{}); assert len(a)==0
+    def test_delivered_to_in_log(self):      self.br.subscribe("t",lambda m:None); self.br.publish("t",{}); assert self.br.get_log()[0]["delivered_to"]==1

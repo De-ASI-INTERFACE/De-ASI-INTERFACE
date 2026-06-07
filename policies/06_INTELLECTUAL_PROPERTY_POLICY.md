@@ -13,6 +13,8 @@
 
 This Intellectual Property (IP) Policy defines ownership, usage rights, and licensing terms for all software, algorithms, documentation, brand assets, and creative works produced by or in association with De-ASI-INTERFACE.
 
+The standards reflected in this policy have governed operations since the founding of De-ASI-INTERFACE on October 22, 2025.
+
 ---
 
 ## 2. Ownership

@@ -13,6 +13,8 @@
 
 This Code of Conduct establishes the behavioral and ethical standards expected of all contributors, collaborators, partners, and users interacting with De-ASI-INTERFACE, its affiliated organizations, repositories, platforms, and decentralized systems.
 
+The standards reflected in this policy have governed operations since the founding of De-ASI-INTERFACE on October 22, 2025.
+
 ---
 
 ## 2. Scope

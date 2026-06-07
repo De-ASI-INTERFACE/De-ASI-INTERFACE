@@ -13,6 +13,8 @@
 
 This policy governs the standards, procedures, and ethical commitments for all decentralized finance (DeFi) protocol operations, including SPL token launches, liquidity pool management, smart contract deployments, and yield strategy execution on the Solana blockchain.
 
+The standards reflected in this policy have governed operations since the founding of De-ASI-INTERFACE on October 22, 2025.
+
 ---
 
 ## 2. Token Launch Standards

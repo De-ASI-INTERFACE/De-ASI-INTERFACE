@@ -13,6 +13,8 @@
 
 This Security Policy defines the security architecture, vulnerability management protocols, access control standards, and incident response procedures governing all systems operated by De-ASI-INTERFACE, including Solana-based smart contracts, trading infrastructure, API endpoints, and CI/CD pipelines.
 
+The standards reflected in this policy have governed operations since the founding of De-ASI-INTERFACE on October 22, 2025.
+
 ---
 
 ## 2. Scope

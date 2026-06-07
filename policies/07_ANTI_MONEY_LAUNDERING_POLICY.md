@@ -13,6 +13,8 @@
 
 This AML/KYC Policy establishes procedures and controls to detect, prevent, and report activities that may involve money laundering, terrorist financing, or other financial crimes. This policy reflects a commitment to U.S. federal law compliance and international financial standards.
 
+The standards reflected in this policy have governed operations since the founding of De-ASI-INTERFACE on October 22, 2025.
+
 ---
 
 ## 2. Regulatory Framework

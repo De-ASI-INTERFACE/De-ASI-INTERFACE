@@ -13,6 +13,8 @@
 
 This Incident Response Policy defines the structured process for identifying, containing, eradicating, and recovering from security incidents, system outages, and trading anomalies affecting De-ASI-INTERFACE operations.
 
+The standards reflected in this policy have governed operations since the founding of De-ASI-INTERFACE on October 22, 2025.
+
 ---
 
 ## 2. Incident Classification

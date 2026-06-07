@@ -13,6 +13,8 @@
 
 This Data Privacy Policy describes how De-ASI-INTERFACE collects, processes, stores, and protects personal and on-chain data across its platforms, APIs, and monitoring systems.
 
+The standards reflected in this policy have governed operations since the founding of De-ASI-INTERFACE on October 22, 2025.
+
 ---
 
 ## 2. Data We Collect

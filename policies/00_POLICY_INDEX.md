@@ -13,6 +13,8 @@
 
 This index catalogues all active institutional policies governing operations, security, trading, and compliance across De-ASI-INTERFACE and its affiliated entities. All documents are version-controlled, dated, and approved by the Principal.
 
+The standards reflected in this policy suite have governed operations since the founding of De-ASI-INTERFACE on October 22, 2025.
+
 | # | Document ID | Policy Name | Classification | Effective Date |
 |---|-------------|-------------|---------------|----------------|
 | 1 | POLICY-001 | [Code of Conduct Policy](./01_CODE_OF_CONDUCT_POLICY.md) | Public | June 6, 2026 |

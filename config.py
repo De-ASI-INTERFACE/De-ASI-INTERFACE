@@ -1,6 +1,9 @@
 """
 config.py
 
+Owner/Creator: Richard Patterson
+© 2026 Richard Patterson. All Rights Reserved.
+
 Centralized application configuration via environment variables.
 
 All secrets and environment-specific values are loaded from the environment.
@@ -40,15 +43,14 @@ class Settings:
     )
 
     # -----------------------------------------------------------------------
-    # Authentication (SEC-001, SEC-004, SEC-005, SEC-010)
+    # Database — REQUIRED in production
+    # Railway auto-provides DATABASE_URL when Postgres plugin is added
     # -----------------------------------------------------------------------
-    # REQUIRED: 64-char random hex — generate with:
-    #   python -c "import secrets; print(secrets.token_hex(64))"
-    JWT_SECRET: str = field(
-        default_factory=lambda: os.getenv("JWT_SECRET", "INSECURE-DEV-ONLY-CHANGE-ME")
-    )
-    JWT_EXPIRY_HOURS: int = field(
-        default_factory=lambda: int(os.getenv("JWT_EXPIRY_HOURS", "1"))
+    DATABASE_URL: str = field(
+        default_factory=lambda: os.getenv(
+            "DATABASE_URL",
+            "postgresql://localhost:5432/deasiinterface_dev"
+        )
     )
 
     # -----------------------------------------------------------------------
@@ -56,9 +58,22 @@ class Settings:
     #   - JWT JTI revocation list (SEC-010)
     #   - 2FA rate limiter persistence (SEC-005)
     #   - WebSocket ticket store (SEC-007)
+    # Railway auto-provides REDIS_URL when Redis plugin is added
     # -----------------------------------------------------------------------
     REDIS_URL: str = field(
         default_factory=lambda: os.getenv("REDIS_URL", "redis://localhost:6379/0")
+    )
+
+    # -----------------------------------------------------------------------
+    # Authentication (SEC-001, SEC-004, SEC-005, SEC-010)
+    # REQUIRED: 64-char random hex — generate with:
+    #   python -c "import secrets; print(secrets.token_hex(64))"
+    # -----------------------------------------------------------------------
+    JWT_SECRET: str = field(
+        default_factory=lambda: os.getenv("JWT_SECRET", "INSECURE-DEV-ONLY-CHANGE-ME")
+    )
+    JWT_EXPIRY_HOURS: int = field(
+        default_factory=lambda: int(os.getenv("JWT_EXPIRY_HOURS", "1"))
     )
 
     # -----------------------------------------------------------------------
@@ -72,7 +87,7 @@ class Settings:
     )
 
     # -----------------------------------------------------------------------
-    # App
+    # App server
     # -----------------------------------------------------------------------
     PORT: int = field(
         default_factory=lambda: int(os.getenv("PORT", "8000"))
@@ -82,12 +97,22 @@ class Settings:
     )
 
     def __post_init__(self) -> None:
-        """Validate critical settings on startup."""
+        """Validate critical settings on startup — raises on misconfiguration."""
         if self.ENVIRONMENT == "production":
             if self.JWT_SECRET == "INSECURE-DEV-ONLY-CHANGE-ME":
                 raise ValueError(
                     "CRITICAL: JWT_SECRET must be set to a secure random value in production. "
                     "Generate with: python -c \"import secrets; print(secrets.token_hex(64))\""
+                )
+            if "localhost" in self.DATABASE_URL:
+                raise ValueError(
+                    "CRITICAL: DATABASE_URL points to localhost in production. "
+                    "Set DATABASE_URL to your Railway PostgreSQL connection string."
+                )
+            if "localhost" in self.REDIS_URL:
+                raise ValueError(
+                    "CRITICAL: REDIS_URL points to localhost in production. "
+                    "Set REDIS_URL to your Railway Redis connection string."
                 )
             if "localhost" in self.CORS_ORIGINS:
                 import warnings
@@ -97,5 +122,5 @@ class Settings:
                 )
 
 
-# Singleton instance
+# Singleton instance — imported everywhere
 settings = Settings()

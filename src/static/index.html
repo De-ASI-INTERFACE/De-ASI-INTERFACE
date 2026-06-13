@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De-ASI-INTERFACE</title>
+    <meta name="description" content="Production-hardened ASI interface — decentralized AI and Solana-native agentic finance">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .screen {
+            display: none;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .auth-container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .auth-container h2 {
+            margin-bottom: 24px;
+            color: #333;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 12px;
+            display: none;
+            text-align: center;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .app-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            height: 80vh;
+            min-height: 500px;
+        }
+
+        .sidebar {
+            width: 300px;
+            background: #f8f9fa;
+            border-right: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .sidebar-header h3 {
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .user-info {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .stats-grid {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        .conversation-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px;
+        }
+
+        .conversation-item {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .conversation-item:hover {
+            background: white;
+        }
+
+        .main-chat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            color: #333;
+        }
+
+        .logout-btn {
+            padding: 8px 16px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .message {
+            margin-bottom: 16px;
+            display: flex;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            word-wrap: break-word;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .message.assistant .message-content {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #999;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .input-area {
+            padding: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 12px;
+        }
+
+        #message-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 44px;
+            max-height: 120px;
+        }
+
+        #message-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        #send-btn {
+            padding: 0 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        #send-btn:hover {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                max-height: 40vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="screen active">
+        <div class="auth-container">
+            <h2>De-ASI-INTERFACE</h2>
+            <form id="login-form" onsubmit="return handleLogin(event)">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required autocomplete="current-password">
+                </div>
+                <button type="submit" id="login-btn" class="btn">Login</button>
+                <div id="login-error" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2FA Screen -->
+    <div id="2fa-screen" class="screen">
+        <div class="auth-container">
+            <h2>Two-Factor Authentication</h2>
+            <div class="form-group">
+                <label for="2fa-code">Enter 6-digit code</label>
+                <input type="text" id="2fa-code" maxlength="6" pattern="[0-9]{6}" required autocomplete="one-time-code">
+            </div>
+            <button onclick="handle2FA()" class="btn">Verify</button>
+            <div id="2fa-error" class="error-message"></div>
+        </div>
+    </div>
+
+    <!-- App Screen -->
+    <div id="app-screen" class="screen">
+        <div class="app-container">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h3>De-ASI-INTERFACE</h3>
+                    <div class="user-info" id="user-info">Connected</div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="stat-conversations">0</div>
+                        <div class="stat-label">Conversations</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="stat-messages">0</div>
+                        <div class="stat-label">Messages</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="stat-knowledge">0</div>
+                        <div class="stat-label">Knowledge</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">●</div>
+                        <div class="stat-label">Status</div>
+                    </div>
+                </div>
+
+                <div class="conversation-list" id="conversation-list">
+                    <!-- Conversations will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Main Chat -->
+            <div class="main-chat">
+                <div class="chat-header">
+                    <h3>Chat</h3>
+                    <button onclick="handleLogout()" class="logout-btn">Logout</button>
+                </div>
+                
+                <div class="messages-container" id="messages-container">
+                    <!-- Messages will appear here -->
+                </div>
+
+                <div class="input-area">
+                    <div class="input-container">
+                        <textarea 
+                            id="message-input" 
+                            placeholder="Type your message..."
+                            onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();sendMessage();}"
+                        ></textarea>
+                        <button id="send-btn" onclick="sendMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DOMPurify for XSS protection (SEC-003) -->
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js" 
+            integrity="sha384-EUHfINwKd0c5rhthL8cLVWLdz3dq1xj4xuB0gCQB/T9vB/9dNwnr8Np0DEl1xnf7" 
+            crossorigin="anonymous"></script>
+
+    <!-- Vercel Web Analytics -->
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+
+    <!-- Application JavaScript -->
+    <script src="/static/js/app.js"></script>
+
+    <!-- Helper functions for app.js -->
+    <script>
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.classList.add('show');
+                setTimeout(() => {
+                    errorElement.classList.remove('show');
+                }, 5000);
+            }
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins}m ago`;
+            if (diffMins < 1440) return `${Math.floor(diffMins / 60)}h ago`;
+            return date.toLocaleDateString();
+        }
+
+        function addMessageToUI(role, content) {
+            const container = document.getElementById('messages-container');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            
+            if (typeof DOMPurify !== 'undefined') {
+                contentDiv.innerHTML = DOMPurify.sanitize(content);
+            } else {
+                contentDiv.textContent = content;
+            }
+            
+            messageDiv.appendChild(contentDiv);
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function addTypingIndicator() {
+            const container = document.getElementById('messages-container');
+            const typingId = crypto.randomUUID();
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message assistant';
+            messageDiv.id = `typing-${typingId}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content typing-indicator';
+            contentDiv.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+            
+            messageDiv.appendChild(contentDiv);
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+            
+            return typingId;
+        }
+
+        function removeTypingIndicator(typingId) {
+            const element = document.getElementById(`typing-${typingId}`);
+            if (element) {
+                element.remove();
+            }
+        }
+
+        // Initialize CSRF token on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof fetchCsrfToken === 'function') {
+                fetchCsrfToken();
+            }
+        });
+    </script>
+</body>
+</html>

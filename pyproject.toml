@@ -1,0 +1,18 @@
+[project]
+name = "quant-architecture"
+version = "0.1.0"
+description = "Tradecraft-informed modular quantitative architecture"
+requires-python = ">=3.11"
+dependencies = [
+  "pydantic>=2.7",
+  "numpy>=1.26",
+  "pandas>=2.2",
+  "scipy>=1.13",
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+quant-arch = "quant_arch.cli:main"

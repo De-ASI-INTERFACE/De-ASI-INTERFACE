@@ -2,6 +2,8 @@
 
 Tradecraft-informed 10-layer quantitative pipeline built on Jack Davis's DI analyst axioms.
 
+ •author - Richard Patterson
+
 ## Layers
 
 | Layer | Module | Axiom Source |

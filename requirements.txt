@@ -7,7 +7,7 @@
 # -----------------------------------------------------------------------
 fastapi>=0.111.0
 uvicorn[standard]>=0.29.0
-python-multipart>=0.0.9
+python-multipart>=0.0.32
 pyjwt>=2.8.0
 aioredis>=2.0.1
 pyotp>=2.9.0              # TOTP 2FA

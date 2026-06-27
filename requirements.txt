@@ -6,7 +6,7 @@
 # Web framework + auth
 # -----------------------------------------------------------------------
 fastapi>=0.111.0
-uvicorn[standard]>=0.29.0
+uvicorn[standard]>=0.49.0
 python-multipart>=0.0.32
 pyjwt>=2.8.0
 aioredis>=2.0.1

@@ -94,4 +94,4 @@ Sponsor the project and help build the interface standard beneath the agentic ec
 
 ---
 
-*Built in Ohio. Engineered for the agentic economy. Continuously deployed.*
+*Built in Ohio by Richard Patterson. Engineered for the agentic economy. Continuously deployed.*

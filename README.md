@@ -1,5 +1,6 @@
 # Richard Patterson — De-ASI-INTERFACE
 
+Tradecraft-informed 10-layer quantitative pipeline built on Richard Patterson's intellectual strategies 
 [![Solana](https://img.shields.io/badge/Chain-Solana_Mainnet-9945FF?style=flat-square&logo=solana&logoColor=white)](https://solana.com)
 [![Rust](https://img.shields.io/badge/Rust-Systems_Engineer-orange?style=flat-square&logo=rust&logoColor=white)](https://www.rust-lang.org)
 [![Python](https://img.shields.io/badge/Python-Quant_Systems-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)

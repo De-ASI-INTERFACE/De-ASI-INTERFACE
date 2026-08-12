@@ -1,6 +1,6 @@
 # Modular Quantitative Architecture
 
-Tradecraft-informed 10-layer quantitative pipeline built on Jack Davis's DI analyst axioms.
+Tradecraft-informed 10-layer quantitative pipeline built on Richard Patterson's intellectual strategies 
 
 ## Layers
 

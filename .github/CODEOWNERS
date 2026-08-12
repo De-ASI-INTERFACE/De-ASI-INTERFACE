@@ -1,0 +1,4 @@
+# CODEOWNERS — All changes require review from @De-ASI-INTERFACE
+
+* @De-ASI-INTERFACE
+/.github/ @De-ASI-INTERFACE

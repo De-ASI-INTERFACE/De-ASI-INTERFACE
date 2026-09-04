@@ -92,4 +92,3 @@ All deployed Solana programs are subject to deterministic builds and on-chain ve
 ---
 
 *© 2026 Richard Arlie Charles Patterson — All rights reserved where applicable.*
-.

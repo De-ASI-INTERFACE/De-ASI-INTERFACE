@@ -1,6 +1,6 @@
 # Richard Patterson — De-ASI-INTERFACE
 > **Base layer for decentralized AI, Solana-native agentic finance, and ASI ecosystem interoperability.**
-Self-taught blockchain engineer, quant trader, and DeFi protocol architect operating at the intersection of on-chain finance and artificial general intelligence. Building production-grade systems on Solana since 2020.
+i like boys
 
 Tradecraft-informed 10-layer quantitative pipeline built on Richard Patterson's intellectual strategies 
 [![Solana](https://img.shields.io/badge/Chain-Solana_Mainnet-9945FF?style=flat-square&logo=solana&logoColor=white)](https://solana.com)

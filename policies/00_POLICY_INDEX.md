@@ -13,7 +13,7 @@
 
 This index catalogues all active institutional policies governing operations, security, trading, and compliance across De-ASI-INTERFACE and its affiliated entities. All documents are version-controlled, dated, and approved by the Principal.
 
-The standards reflected in this policy suite have governed operations since the founding of De-ASI-INTERFACE on October 22, 2025.
+Effective from the date above, this policy suite supersedes any prior informal practice. Where prior practice differed, the effective date governs; no representation is made about the state of controls prior to that date.
 
 | # | Document ID | Policy Name | Classification | Effective Date |
 |---|-------------|-------------|---------------|----------------|
@@ -25,6 +25,10 @@ The standards reflected in this policy suite have governed operations since the 
 | 6 | POLICY-006 | [Intellectual Property Policy](./06_INTELLECTUAL_PROPERTY_POLICY.md) | Public | June 6, 2026 |
 | 7 | POLICY-007 | [Anti-Money Laundering & KYC Policy](./07_ANTI_MONEY_LAUNDERING_POLICY.md) | Confidential | June 6, 2026 |
 | 8 | POLICY-008 | [Incident Response Policy](./08_INCIDENT_RESPONSE_POLICY.md) | Internal | June 6, 2026 |
+| 9 | POLICY-009 | [Reserve Custody Policy](./09_RESERVE_CUSTODY_POLICY.md) | Confidential | July 1, 2026 |
+| 10 | POLICY-010 | [AI Agent Governance Policy](./10_AI_AGENT_GOVERNANCE_POLICY.md) | Confidential | September 10, 2026 |
+| 11 | POLICY-011 | [Change Management and Segregation of Duties Policy](./11_CHANGE_MANAGEMENT_POLICY.md) | Confidential | September 10, 2026 |
+| — | POLICY-CAL | [Compliance Calendar](./COMPLIANCE_CALENDAR.md) | Confidential | September 10, 2026 |
 
 ---
 
@@ -33,7 +37,7 @@ The standards reflected in this policy suite have governed operations since the 
 - **Review Cycle:** All policies reviewed annually or upon material operational changes
 - **Version Control:** All changes tracked via Git commit history
 - **Approval Authority:** Richard Patterson, Principal — De-ASI-INTERFACE
-- **Next Scheduled Review:** June 6, 2027
+- **Next Scheduled Review:** September 10, 2027 (per the Compliance Calendar)
 
 ---
 

@@ -1,0 +1,31 @@
+# AI Agent Inventory — POLICY-010 §3
+# Every in-scope agent MUST appear here before production deployment.
+# Fields are mandatory unless explicitly marked optional.
+
+schema_version: 1
+last_reviewed: 2026-09-10
+reviewer: Richard Patterson
+
+agents: []
+
+# Example entry (uncomment and adapt when adding a real agent):
+# agents:
+#   - id: agent-001
+#     name: bounded-market-maker
+#     environment: dev            # dev | staging | production
+#     model_provider: anthropic   # anthropic | openai | google | local | ...
+#     model_family: claude-sonnet
+#     model_version_pinned: claude-sonnet-4-5-20250929
+#     system_prompt_sha256: "PENDING"
+#     tools:
+#       - bingx.get_market_depth
+#       - bingx.new_order
+#     signing_scope:
+#       wallets: []               # canonical wallet addresses
+#       programs: []
+#       instruction_types: []
+#     authority_tier: A0          # A0 | A1 | A2 | A3 | A4
+#     owner: Richard Patterson
+#     reviewer: TBD               # MUST be distinct from owner for tier ≥ A2
+#     last_validated: null
+#     kill_switch_id: null        # matches POLICY-008 §3 identifier

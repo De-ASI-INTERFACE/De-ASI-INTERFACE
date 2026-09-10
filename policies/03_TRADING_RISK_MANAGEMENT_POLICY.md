@@ -13,7 +13,7 @@
 
 This policy establishes the quantitative risk management framework governing all algorithmic trading operations, DeFi liquidity deployments, and portfolio management activities. It ensures capital preservation, drawdown limits, and regulatory alignment across all trading verticals.
 
-The standards reflected in this policy have governed operations since the founding of De-ASI-INTERFACE on October 22, 2025.
+Effective from the date above, this policy supersedes any prior informal practice. Where prior practice differed, the effective date governs; no representation is made about the state of controls prior to that date.
 
 ---
 

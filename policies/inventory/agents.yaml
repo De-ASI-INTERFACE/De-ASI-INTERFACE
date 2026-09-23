@@ -26,6 +26,6 @@ agents: []
 #       instruction_types: []
 #     authority_tier: A0          # A0 | A1 | A2 | A3 | A4
 #     owner: Richard Patterson
-#     reviewer: TBD               # MUST be distinct from owner for tier ≥ A2
+#     reviewer: TBD               # MUST be distinct from owner for every in-scope agent
 #     last_validated: null
 #     kill_switch_id: null        # matches POLICY-008 §3 identifier

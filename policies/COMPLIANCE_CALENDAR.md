@@ -22,7 +22,7 @@ The next full review of this calendar is September 10, 2027.
 | # | Obligation | Policy | Owner | Target date | Status |
 |---|---|---|---|---|---|
 | O1 | Engage counsel for MSB / Ohio money-transmitter determination per POLICY-007 §2 | 07 | Principal | Before any activity that could trigger MSB status | Open |
-| O2 | Complete and publish the AI agent inventory (`policies/inventory/agents.yaml`) before any A2+ agent runs in production | 10 §3 | Principal | Before first A2+ deployment | Open |
+| O2 | Complete and publish the AI agent inventory (`policies/inventory/agents.yaml`) before any in-scope agent runs in production | 10 §3 | Principal | Before first in-scope production deployment | Open |
 | O3 | Complete kill-switch implementation and record baseline SLO measurement | 03 §5, 08 §3 | Principal | Before first live-capital deployment | Open |
 | O4 | Complete decision-audit-log implementation and verifier | 10 §8 | Principal | Before first live-capital deployment | Open |
 | O5 | Complete SBOM generation and publish for every tagged release | 11 §5 | Principal | Next release after CI hardening lands | Open |
